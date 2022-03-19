@@ -51,7 +51,7 @@ namespace Tenders
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=TenderDetails}/{action=Index}/{id?}");
             });
         }
     }
