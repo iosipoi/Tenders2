@@ -6,7 +6,7 @@ namespace TDesk.Models
 {
     public class Tender
     {
-        public int Id { get; set; }
+        public int Id  { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double StartPrice { get; set; }
