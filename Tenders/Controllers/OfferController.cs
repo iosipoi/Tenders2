@@ -12,48 +12,48 @@ namespace Tenders.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TendersController : ControllerBase
+    public class OfferController : ControllerBase
     {
         private readonly TendersContext _context;
 
-        public TendersController(TendersContext context)
+        public OfferController(TendersContext context)
         {
             _context = context;
         }
 
-        // GET: api/Tenders
+        // GET: api/Offer
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TenderDetails>>> GetTenderDetails()
+        public async Task<ActionResult<IEnumerable<OfferDetails>>> GetOfferDetails()
         {
-            return await _context.TenderDetails.ToListAsync();
+            return await _context.OfferDetails.ToListAsync();
         }
 
-        // GET: api/Tenders/5
+        // GET: api/Offer/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TenderDetails>> GetTenderDetails(int id)
+        public async Task<ActionResult<OfferDetails>> GetOfferDetails(int id)
         {
-            var tenderDetails = await _context.TenderDetails.FindAsync(id);
+            var offerDetails = await _context.OfferDetails.FindAsync(id);
 
-            if (tenderDetails == null)
+            if (offerDetails == null)
             {
                 return NotFound();
             }
 
-            return tenderDetails;
+            return offerDetails;
         }
 
-        // PUT: api/Tenders/5
+        // PUT: api/Offer/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTenderDetails(int id, TenderDetails tenderDetails)
+        public async Task<IActionResult> PutOfferDetails(int id, OfferDetails offerDetails)
         {
-            if (id != tenderDetails.Id)
+            if (id != offerDetails.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(tenderDetails).State = EntityState.Modified;
+            _context.Entry(offerDetails).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Tenders.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TenderDetailsExists(id))
+                if (!OfferDetailsExists(id))
                 {
                     return NotFound();
                 }
@@ -74,37 +74,37 @@ namespace Tenders.Controllers
             return NoContent();
         }
 
-        // POST: api/Tenders
+        // POST: api/Offer
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<TenderDetails>> PostTenderDetails(TenderDetails tenderDetails)
+        public async Task<ActionResult<OfferDetails>> PostOfferDetails(OfferDetails offerDetails)
         {
-            _context.TenderDetails.Add(tenderDetails);
+            _context.OfferDetails.Add(offerDetails);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTenderDetails", new { id = tenderDetails.Id }, tenderDetails);
+            return CreatedAtAction("GetOfferDetails", new { id = offerDetails.Id }, offerDetails);
         }
 
-        // DELETE: api/Tenders/5
+        // DELETE: api/Offer/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<TenderDetails>> DeleteTenderDetails(int id)
+        public async Task<ActionResult<OfferDetails>> DeleteOfferDetails(int id)
         {
-            var tenderDetails = await _context.TenderDetails.FindAsync(id);
-            if (tenderDetails == null)
+            var offerDetails = await _context.OfferDetails.FindAsync(id);
+            if (offerDetails == null)
             {
                 return NotFound();
             }
 
-            _context.TenderDetails.Remove(tenderDetails);
+            _context.OfferDetails.Remove(offerDetails);
             await _context.SaveChangesAsync();
 
-            return tenderDetails;
+            return offerDetails;
         }
 
-        private bool TenderDetailsExists(int id)
+        private bool OfferDetailsExists(int id)
         {
-            return _context.TenderDetails.Any(x=> x.Id == id);  
+            return _context.OfferDetails.Any(e => e.Id == id);
         }
     }
 }

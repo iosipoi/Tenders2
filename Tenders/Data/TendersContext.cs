@@ -15,5 +15,7 @@ namespace Tenders.Data
         }
 
         public DbSet<Tenders.Models.TenderDetails> TenderDetails { get; set; }
+
+        public DbSet<Tenders.Models.OfferDetails> OfferDetails { get; set; }
     }
 }
