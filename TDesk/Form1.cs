@@ -15,15 +15,18 @@ namespace TDesk
             InitializeComponent();
         }
 
+
         private async void Form1_LoadAsync(object sender, EventArgs e)
         {
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("http://localhost:54462/api/Tenders");
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            var list = JsonConvert.DeserializeObject<IEnumerable<Tender>>(responseBody);
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/Tenders");
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var list = JsonConvert.DeserializeObject<IEnumerable<Tender>>(responseBody);
 
-            this.dataGridView1.DataSource = list;
+                this.dataGridView1.DataSource = list;
+            }
         }
     }
 }

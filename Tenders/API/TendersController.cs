@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Tenders.Data;
 using Tenders.Models;
 
-namespace Tenders.Controllers
+namespace Tenders.API
 {
     [Route("api/[controller]")]
     [ApiController]
