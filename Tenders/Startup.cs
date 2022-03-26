@@ -28,6 +28,11 @@ namespace Tenders
 
             services.AddDbContext<TendersContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TendersContext")));
+
+            services.AddSwaggerGen(option => option.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
+            { 
+                Title= "Tenders API v1"
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +58,9 @@ namespace Tenders
                     name: "default",
                     pattern: "{controller=TenderDetails}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
     }
 }
