@@ -8,6 +8,6 @@ namespace Tenders.Models
         public int OfferPrice { get; set; }
         public int TenderId { get; set; }
         public int CreatedBy { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
