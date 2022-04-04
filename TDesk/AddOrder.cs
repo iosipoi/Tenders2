@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
+using TDesk.Models;
 
 namespace TDesk
 {
@@ -28,9 +29,17 @@ namespace TDesk
         {
             using (HttpClient client = new HttpClient())
             {
-                var ttt = TenderId;
-              //  HttpContent order = new HttpContent();
-                HttpResponseMessage response = await client.PostAsync("http://localhost:54462/api/Offer", null);
+                var offer = new OfferDetails 
+                { 
+                    TenderId=TenderId,
+                    OfferPrice=Convert.ToInt32(offerPrice.Text),
+                    CreatedBy=1,
+                    CreatedOn=DateTime.Now
+                };
+
+                var content = new StringContent(JsonConvert.SerializeObject(offer), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync("http://localhost:54462/api/Offer", content);
 
                 response.EnsureSuccessStatusCode();
             }

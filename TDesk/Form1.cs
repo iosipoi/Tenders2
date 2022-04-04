@@ -20,9 +20,9 @@ namespace TDesk
         {
             using (HttpClient client = new HttpClient())
             {
-                //HttpResponseMessage response = await client.GetAsync("http://localhost:54462/api/Tenders");
+                HttpResponseMessage response = await client.GetAsync("http://localhost:54462/api/Tenders");
 
-                HttpResponseMessage response = await client.GetAsync("http://localhost:3000/tenders");
+                //HttpResponseMessage response = await client.GetAsync("http://localhost:3000/tenders");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var list = JsonConvert.DeserializeObject<IEnumerable<Tender>>(responseBody);
