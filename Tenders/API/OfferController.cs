@@ -42,6 +42,21 @@ namespace Tenders.API
             return offerDetails;
         }
 
+        // GET: api/Offer/bytender/5
+        //[Route("bytender")]
+        [HttpGet("bytender/{id}")]
+        public async Task<ActionResult<IEnumerable<OfferDetails>>> GetOfferByTenderId(int id)
+        {
+            var offerDetails = _context.OfferDetails.Where(x => x.TenderId == id);
+
+            if (offerDetails == null)
+            {
+                return NotFound();
+            }
+
+            return offerDetails.ToList();
+        }
+
         // PUT: api/Offer/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
