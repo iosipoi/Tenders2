@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Tenders.Data;
 using Tenders.Models;
 
@@ -45,7 +44,7 @@ namespace Tenders.API
         // GET: api/Offer/bytender/5
         //[Route("bytender")]
         [HttpGet("bytender/{id}")]
-        public async Task<ActionResult<IEnumerable<OfferDetails>>> GetOfferByTenderId(int id)
+        public ActionResult<IEnumerable<OfferDetails>> GetOfferByTenderId(int id)
         {
             var offerDetails = _context.OfferDetails.Where(x => x.TenderId == id);
 
@@ -92,6 +91,7 @@ namespace Tenders.API
         // POST: api/Offer
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<OfferDetails>> PostOfferDetails(OfferDetails offerDetails)
         {
