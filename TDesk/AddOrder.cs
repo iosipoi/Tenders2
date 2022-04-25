@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
@@ -27,22 +23,29 @@ namespace TDesk
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            using (HttpClient client = new HttpClient())
+            var offer = new OfferDetails
             {
-                var offer = new OfferDetails 
-                { 
-                    TenderId=TenderId,
-                    OfferPrice=Convert.ToInt32(offerPrice.Text),
-                    CreatedBy=1,
-                    CreatedOn=DateTime.Now
-                };
+                TenderId = TenderId,
+                OfferPrice = Convert.ToInt32(offerPrice.Text),
+                CreatedBy = 1,
+                CreatedOn = DateTime.Now
+            };
 
-                var content = new StringContent(JsonConvert.SerializeObject(offer), Encoding.UTF8, "application/json");
+            //var client = new RestClient("http://localhost:5000/api/Offer");
+            ////client.Timeout = -1;
+            //var request = new RestRequest("POST");
+            //request.AddHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIxIiwibmJmIjoxNjUwODkwMDg0LCJleHAiOjE2NTA4OTA2ODQsImlhdCI6MTY1MDg5MDA4NH0.rwIVKoC4ORxyIuQhrg1y46s6cnHEis7XdZC6trZN6cM");
+            //request.AddHeader("Content-Type", "application/json");
+            //request.AddParameter("application/json", JsonConvert.SerializeObject(offer), ParameterType.RequestBody);
+            //var response = client.ExecuteAsync(request);
 
-                HttpResponseMessage response = await client.PostAsync("http://localhost:54462/api/Offer", content);
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIxIiwibmJmIjoxNjUwODkwMDg0LCJleHAiOjE2NTA4OTA2ODQsImlhdCI6MTY1MDg5MDA4NH0.rwIVKoC4ORxyIuQhrg1y46s6cnHEis7XdZC6trZN6cM");
+            var content = new StringContent(JsonConvert.SerializeObject(offer), Encoding.UTF8, "application/json");
 
-                response.EnsureSuccessStatusCode();
-            }
+            HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/Offer", content);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

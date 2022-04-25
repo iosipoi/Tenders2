@@ -23,11 +23,6 @@ namespace Tenders.API
             _jwtManager = jwtManager;
         }
 
-        //public UsersController( IJwtManagerRepository jwtManager)
-        //{
-        //    _jwtManager = jwtManager;
-        //}
-
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
@@ -96,8 +91,6 @@ namespace Tenders.API
         [HttpPost("authenticate")]
         public async Task<ActionResult<User>> Authenticate(User user)
         {
-
-
             var token = _jwtManager.Authenticate(user);
 
             return Ok(token);
