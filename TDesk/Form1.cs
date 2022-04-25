@@ -55,5 +55,12 @@ namespace TDesk
                 this.dataGridView1.DataSource = list;
             }
         }
+
+        private void loginBtn_Click(object sender, EventArgs e)
+        {
+            var loginForm = new Login();
+
+            loginForm.Show();
+        }
     }
 }

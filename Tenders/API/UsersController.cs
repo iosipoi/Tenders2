@@ -89,11 +89,13 @@ namespace Tenders.API
         }
 
         [HttpPost("authenticate")]
-        public async Task<ActionResult<User>> Authenticate(User user)
+        public string Authenticate(User user)
         {
-            var token = _jwtManager.Authenticate(user);
+            var u = _context.User.FirstOrDefault(x=>x.Nume == user.Nume && x.Password == user.Password);
+            if (u == null) return null;
 
-            return Ok(token);
+            user.Id = u.Id;
+            return _jwtManager.Authenticate(user);
         }
 
         // DELETE: api/Users/5
