@@ -27,20 +27,23 @@ namespace TDesk
             var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/Users/authenticate", content);
 
-            var token = response.Content.ReadAsStringAsync().Result;
+            var result = JsonConvert.DeserializeObject<User>(response.Content.ReadAsStringAsync().Result);
 
-            if (token != null)
+            if (result.Token != null)
             {
                 ObjectCache cache = MemoryCache.Default;
                 string tcache = cache["token"] as string;
+                string userid = cache["userid"] as string;
                 if (tcache == null)
                 {
                     CacheItemPolicy policy = new CacheItemPolicy();
-                    cache.Set("token", token, policy);
+                    cache.Set("token", result.Token, policy);
+                    cache.Set("userid", result.Id.ToString(), policy);
                 }
             }
-
+          
             response.EnsureSuccessStatusCode();
+            this.Close();
         }
     }
 }

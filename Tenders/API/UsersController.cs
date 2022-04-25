@@ -89,13 +89,18 @@ namespace Tenders.API
         }
 
         [HttpPost("authenticate")]
-        public string Authenticate(User user)
+        public UserToken Authenticate(User user)
         {
             var u = _context.User.FirstOrDefault(x=>x.Nume == user.Nume && x.Password == user.Password);
             if (u == null) return null;
 
-            user.Id = u.Id;
-            return _jwtManager.Authenticate(user);
+            var token = _jwtManager.Authenticate(user);
+
+            return new UserToken { 
+                Nume=u.Nume, 
+                Id=u.Id, 
+                Token=token 
+            };
         }
 
         // DELETE: api/Users/5
@@ -118,5 +123,12 @@ namespace Tenders.API
         {
             return _context.User.Any(e => e.Id == id);
         }
+    }
+
+    public class UserToken
+    {
+        public int Id { get; set; }
+        public string Nume { get; set; }
+        public string Token { get; set; }
     }
 }
